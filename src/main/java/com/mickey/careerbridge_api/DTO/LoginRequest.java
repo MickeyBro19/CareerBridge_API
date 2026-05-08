@@ -2,6 +2,7 @@ package com.mickey.careerbridge_api.DTO;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,5 +17,6 @@ public class LoginRequest {
     private String email;
 
     @NotBlank(message = "Password is required")
-    private String message;
+    @Size(min = 4,max = 8, message = "Password should be between 4-8 characters")
+    private String password;
 }

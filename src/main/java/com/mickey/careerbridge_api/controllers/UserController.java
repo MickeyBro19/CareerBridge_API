@@ -1,5 +1,7 @@
 package com.mickey.careerbridge_api.controllers;
 
+import com.mickey.careerbridge_api.DTO.AuthResponse;
+import com.mickey.careerbridge_api.DTO.LoginRequest;
 import com.mickey.careerbridge_api.DTO.RegisterRequest;
 import com.mickey.careerbridge_api.models.User;
 import com.mickey.careerbridge_api.response.ApiResponse;
@@ -16,8 +18,6 @@ public class UserController {
     @Autowired
     UserService service;
 
-    @Autowired
-    JwtService jwtService;
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<User>> register(@Valid @RequestBody RegisterRequest request){
@@ -31,8 +31,13 @@ public class UserController {
 
     }
 
-    @GetMapping("/token-test")
-    public String testToken() {
-        return jwtService.generateToken("test@gmail.com");
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<AuthResponse>> login (@Valid @RequestBody LoginRequest request){
+        AuthResponse response=service.login(request);
+        return ResponseEntity.ok(new ApiResponse<>(
+                true,
+                "User Login Successful",
+                response
+        ));
     }
 }
